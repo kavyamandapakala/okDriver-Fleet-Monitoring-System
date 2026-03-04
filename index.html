@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>okDriver Live Monitor</title>
+    <style>
+        body { font-family: Arial; background: #1a1a1a; color: white; text-align: center; }
+        .dashboard { display: flex; justify-content: space-around; margin-top: 20px; }
+        .card { background: #333; padding: 20px; border-radius: 10px; width: 200px; }
+        #alert { font-weight: bold; font-size: 1.5em; }
+        .red { color: #ff4d4d; border: 2px solid #ff4d4d; }
+        .green { color: #4dff88; }
+    </style>
+</head>
+<body>
+  <body>
+    <h1>okDriver Real-Time Fleet Dashboard</h1>
+    
+   <video width="560" height="315" autoplay loop muted controls>
+  <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+
+    <div class="dashboard">
+        <div class="card">
+            <h3>Live Speed</h3>
+            <p id="speed">0 kmph</p>
+        </div>
+        <div class="card" id="status-card">
+            <h3>Status</h3>
+            <p id="alert">Normal</p>
+        </div>
+        <div class="card">
+            <h3>Risk Score</h3>
+            <p id="risk">0</p>
+        </div>
+    </div>
+
+    <script>
+        const socket = new WebSocket('ws://localhost:8000/ws');
+
+        socket.onmessage = function(event) {
+            const data = JSON.parse(event.data);
+            
+            // Updates labels instantly
+            document.getElementById('speed').innerText = data.speed + " kmph";
+            document.getElementById('alert').innerText = data.event;
+            document.getElementById('risk').innerText = data.risk_score;
+
+            // Logic to change status card color
+            const card = document.getElementById('status-card');
+            if (data.speed > 80) {
+                card.style.backgroundColor = "#ff4d4d"; // Red for Alert
+            } else {
+                card.style.backgroundColor = "#2c2c2c"; // Normal Dark
+            }
+        };
+    </script>
+</body>  
+</html>
