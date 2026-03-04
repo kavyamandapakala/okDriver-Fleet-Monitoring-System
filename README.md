@@ -1,7 +1,9 @@
 1.Project Overview
+
 This is a real-time dashboard I built to solve the challenge of monitoring driver safety at scale. The system simulates a live dashcam feed and pairs it with real-time telemetry analytics to detect speeding and safety violations instantly.
 
 2.Technical Implementation
+
 Backend (FastAPI): I chose FastAPI for the backend because its asynchronous capabilities are perfect for handling high-frequency data ingestion from multiple sensors.
 
 Real-Time Data Sync: I implemented WebSockets to ensure that data moves from the server to the browser with zero latency—crucial for road safety where every second counts.
